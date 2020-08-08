@@ -6,10 +6,10 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
@@ -29,20 +29,31 @@ module.exports = {
       {
         test: /\.(s*)css$/,
         use: [
-            { loader: MiniCssExtractPlugin.loader },
-            'css-loader',
-            'sass-loader',
-        ]
-      }
-    ]
+          { loader: MiniCssExtractPlugin.loader },
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.(png|gif|jpg)$/,
+        use: [
+          {
+            'loader': 'file-loader',
+            options: {
+              name: 'assets/[hash].[ext]',
+            },
+          },
+        ],
+      },
+    ],
   },
-  plugins:  [
+  plugins: [
     new HtmlWebpackPlugin({
-        template: './public/index.html',
-        filename: './index.html',
-      }),
+      template: './public/index.html',
+      filename: './index.html',
+    }),
     new MiniCssExtractPlugin({
-        filename: 'assets/[name].css'
-    })
-  ]  
-}
+      filename: 'assets/[name].css',
+    }),
+  ],
+};
